@@ -1,0 +1,29 @@
+# Se indica la versión de docker-compose
+version: '3'
+
+# Se agregan los servicios, en este caso será nuestra app django y la base de datos
+services:
+  # Servicio que ejecuta la django app
+  web:
+    build:
+      # Se indica el contexto (este directorio)
+      context: .
+      # Se indica el Dockerfile
+      dockerfile: Dockerfile
+    # Se indica el nombre del contenedor
+    container_name: gui
+    # Se indican los puertos
+    ports:
+      # Puerto Dockerfile : puerto local
+      - 5000:5000
+      # Se indica que este servicio depende en el servicio db para funcionar
+    volumes:
+      # Se agrega para enlazar los archivos de este directorio con los archivos del contenedor
+      - .:/usr/api
+
+networks:
+    default:
+      external:
+        name: tyk
+    tyk:
+      external: true
