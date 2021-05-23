@@ -3,49 +3,60 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from rest_framework import viewsets,status
 from rest_framework.response import Response
-from .models import Product
-from .cart import Cart
+from .models import Product, Cart, ProductoCarrito
+import json
 from .forms import CartAddProductForm
+from rest_framework.views import APIView
+from .serializers import ProCarSerializer, ProductSerializer
 
+class CartViewSet(viewsets.ViewSet):
 
-@require_POST
-def cart_add(request, product_id):
+    # Método que se accede por la URL /django
+    def list(self, request):
+        # Se obtiene la lista de productos.
+        pro_car = ProductoCarrito.all()
+        # Se crea el serializer y se envía como response
+        serializer = ProCarSerializer(pro_car, many=True)
+        return Response(serializer.data)
+    
+    # Método que se accede por la URL /django
+    def create(self, request):
+        # Se crea el serializer con los datos recibidos
+        serializer = ProCarSerializer(data=request.data)
+        # Se verifica si el serializer es válido
+        serializer.is_valid(raise_exception=True)
+        # Se guarda el serializer
+        serializer.save()
+        # Se envía la respuesta de la solicitud
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    # Se crea el objeto Cart con la información recibida.
-    cart = Cart(request)
+    # Método que se accede por la URL /django/<str:pk>
+    def retrieve(self, request, pk=None):
+        # Se obtiene el mensaje con ayuda del pk recibido
+        pro_car = ProductoCarrito.objects.get(id=pk)
+        # Se crea el serializer
+        serializer = ProCarSerializer(pro_car)
+        # Se envía la respuesta a la solicitud
+        return Response(serializer.data)
 
-    # Se obtiene la información del producto a agregar y los datos del formulario.
-    product = get_object_or_404(Product, id=product_id)
-    form = CartAddProductForm(request.POST)
+    # Método que se accede por la URL /django/<str:pk>
+    def update(self, request, pk=None): 
+        # Se obtiene el mensaje con ayuda del pk recibido
+        pro_car = ProductoCarrito.objects.get(id=pk)
+        # Se crea el serializer con los datos recibidos
+        serializer = ProCarSerializer(instance=pro_car, data=request.data)
+        # Se verifica si el serializer es válido
+        serializer.is_valid(raise_exception=True)
+        # Se guarda el serializer
+        serializer.save()
+        # Se envía la respuesta a la solicitud
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
-    # Se verifica si el formulario es válido, si es así se procede a agregar el producto.
-    if form.is_valid():
-        cd = form.cleaned_data
-        cart.add(product=product,
-                 quantity=cd['quantity'],
-                 update_quantity=cd['update'])
-    return Response(status=status.HTTP_201_CREATED)
-
-
-def cart_remove(request, product_id):
-
-    # Se crea el objeto Cart con la información recibida.
-    cart = Cart(request)
-
-    # Se obtiene la información del producto a remover y se procede a eliminarlo del carrito.
-    product = get_object_or_404(Product, id=product_id)
-    cart.remove(product)
-    return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-def cart_detail(request):
-
-    # Se crea el objeto Cart con la información recibida.
-    cart = Cart(request)
-
-    # Se obtiene la información de cada item del carrito para mostrarla
-    for item in cart:
-        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'],
-                                                                   'update': True})
-    return JsonResponse([cart], safe=False)
-
+    # Método que se accede por la URL /django/<str:pk>
+    def destroy(self, request, pk=None):
+        # Se obtiene el mensaje con ayuda del pk recibido
+        pro_car = ProductoCarrito.objects.get(id=pk)
+        # Se procede a eliminar el mensaje
+        pro_car.delete()
+        # Se envía la respuesta a la solicitud
+        return Response(status=status.HTTP_204_NO_CONTENT)

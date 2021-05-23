@@ -1,15 +1,14 @@
-
 from django.urls import path
 
-from .views import CartViewSet
+from .views import OrderViewSet
 
 urlpatterns = [
-    path('', CartViewSet.as_view({
+    path('', OrderViewSet.as_view({
         'get': 'list',
         'post': 'create'
     })),
     
-    path('<str:pk>', CartViewSet.as_view({
+    path('<str:pk>', OrderViewSet.as_view({
         'get': 'retrieve',
         'put': 'update',
         'delete': 'destroy'

@@ -16,17 +16,29 @@
 #           +-----------------------+-------------------------+------------------------+
 #           |                       |                         |  - Se indica el modelo |
 #           |                       |  - Representa el        |    del serializer y    |
-#           |   ProductSerializer   |    serializer del       |    los campos a        |
-#           |                       |    modelo Product.      |    utilizar.           |
+#           |   CartSerializer      |    serializer del       |    los campos a        |
+#           |                       |    modelo Cart.         |    utilizar.           |
+#           |                       |                         |                        |
+#           +-----------------------+-------------------------+------------------------+
+#           |                       |                         |  - Se indica el modelo |
+#           |                       |  - Representa el        |    del serializer y    |
+#           |   ProCarSerializer    |    serializer del       |    los campos a        |
+#           |                       |    modelo               |    utilizar.        |
+#           |                       |    ProductoCarrito.     |                        |
 #           |                       |                         |                        |
 #           +-----------------------+-------------------------+------------------------+
 #
 #-------------------------------------------------------------------------
 
 from rest_framework import serializers
-from .models import Product
+from .models import Cart, ProductoCarrito
 
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = Cart
+        fields = '__all__'
+
+class ProCarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductoCarrito
         fields = '__all__'

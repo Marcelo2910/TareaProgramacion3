@@ -44,3 +44,11 @@ class Product(models.Model):
     # Método que regresa la url absoluta del modelo, la cual contiene los campos 'id' y 'slug'.
     def get_absolute_url(self):
         return reverse('product_detail', args=[self.id, self.slug])
+
+class Cart (models.Model):
+    usuario = models.CharField(max_length=50)
+    
+class ProductoCarrito( models.Model):
+    carrito_id = models.ForeignKey(Cart, related_name='carrito', on_delete=models.CASCADE)
+    producto_id = models.ForeignKey(Product, related_name='productp', on_delete=models.CASCADE)
+    cantidad = models.IntegerField()

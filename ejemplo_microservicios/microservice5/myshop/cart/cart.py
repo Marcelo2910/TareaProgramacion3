@@ -1,5 +1,6 @@
 from decimal import Decimal
 from django.conf import settings
+from json import JSONEncoder
 from .models import Product
 
 class Cart(object):
@@ -78,3 +79,7 @@ class Cart(object):
         # Se obtiene el precio total de acuerco con la cantidad de productos de cada item
         # y el precio del producto.
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+
+class CartEncoder(JSONEncoder):
+    def default(self, o):
+        return o.__dict__
