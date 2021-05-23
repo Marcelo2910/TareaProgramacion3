@@ -125,7 +125,7 @@ ul.errorlist {
 #subheader {
     background:#ececec;
     color:#444;
-    padding:15px 100px;
+    padding:5px 100px;
     overflow:auto;
 }
 
@@ -143,7 +143,7 @@ ul.errorlist {
 }
 
 #content {
-    padding:0 100px;
+    padding:0 100px 0 100px;
     overflow:hidden;
 }
 
@@ -182,6 +182,7 @@ ul.errorlist {
     width: 96%;
     margin-right:-220px; 
     overflow:hidden;
+    padding:10px 0px 10px 20px;
 }
 
 .product-list .item {
@@ -313,4 +314,18 @@ ul.errorlist {
 
 .recommendations.cart img {
     width:120px;
+}
+
+.div-centrado{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.texto-404-error{
+    font-size: 30pt;
+}
+
+.texto-404-title{
+    font-size: 60pt;
 }

@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,21 +15,21 @@
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <link href="/static/css/base.css" %}" rel="stylesheet">
 </head>
 <body>
 
     <div id="subheader">
 
         <div style="float:left; margin:0px;">
-            <a href="/shop/"><h2>My shop</h2></a>
+            <a href="/4"><h2>My shop</h2></a>
         </div>
         
         <div class="cart" style="float:right; margin-right:10px; margin-top: 20px;">
             {% with total_items=cart|length %}
                 {% if total_items > 0 %}
                     Your cart: 
-                    <a href="{% url "cart_detail" %}">
+                    <a href="">
                         {{ total_items }} item{{ total_items|pluralize }}, ${{ cart.get_total_price }}
                     </a>
                 {% else %}
@@ -40,11 +39,11 @@
         </div>
 
         <div style="float:right; margin-right:5px; margin-top: 20px;">
-            <img class="logo" width="30px" src="{% static "img/cart.png" %}">
+            <img class="logo" width="30px" src="/static/img/cart.png">
         </div>
 
         <div class="cart" style="float:right; margin-right:30px; margin-top: 20px;">
-            <a href="{% url 'order_list' %}">Cancel Order</a>
+            <a href="/5">Cancel Order</a>
         </div>
 
     </div>

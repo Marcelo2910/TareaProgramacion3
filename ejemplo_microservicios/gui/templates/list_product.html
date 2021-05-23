@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div id="main" class="product-list">
+        <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+        {% for product in result['products'] %}
+            <div class="item">
+                <div>
+                    {% if product.image %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <img class="image" src="{% if product.image %}{{ product.image.url }}{% else %}/static/img/no_image.png{% endif %}">
+                    </a>
+                    {% endif %}
+                </div>
+                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                ${{ product.price }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

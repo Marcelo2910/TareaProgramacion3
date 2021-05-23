@@ -34,6 +34,11 @@ COPY . /usr/api
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+RUN chown www-data:www-data /usr/api/
+RUN chown www-data:www-data /usr/api/db.sqlite3
+RUN chmod 777 /usr/api
+RUN chmod 777 /usr/api/db.sqlite3
+
 # Se expone el puerto 49001 para acceder a la aplicación
 EXPOSE 49005
 

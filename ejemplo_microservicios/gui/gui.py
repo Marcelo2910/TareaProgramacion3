@@ -107,7 +107,8 @@ def index(api):
             # Se convierte la respuesta a json
             json = ms4.json()
             # Se crea el json que será enviado al template
-            json_result = {'ms4': json}
+            json_result = {'products': json}
+            return render_template("list_product.html", result=json_result)
         elif int(api) == 5:
             # Se llama al microservicio enviando como parámetro la url y el header 
             ms4 = requests.get(url_microservice4, headers=header_m4)
@@ -116,6 +117,7 @@ def index(api):
             json = ms5.json()
             # Se crea el json que será enviado al template
             json_result = {'ms5': json}
+            return render_template("cart.html", result=json_result)
         elif int(api) == 6:
             # Se llama al microservicio enviando como parámetro la url y el header 
             ms6 = requests.get(url_microservice6, headers=header_m6)
@@ -123,6 +125,7 @@ def index(api):
             json = ms6.json()
             # Se crea el json que será enviado al template
             json_result = {'ms6': json}
+            return render_template("list_order.html", result=json_result)
                 
         return render_template("index.html", result=json_result)
 

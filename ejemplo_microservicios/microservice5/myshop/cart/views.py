@@ -7,14 +7,14 @@ from .models import Product, Cart, ProductoCarrito
 import json
 from .forms import CartAddProductForm
 from rest_framework.views import APIView
-from .serializers import ProCarSerializer, ProductSerializer
+from .serializers import ProCarSerializer
 
 class CartViewSet(viewsets.ViewSet):
 
     # Método que se accede por la URL /django
     def list(self, request):
         # Se obtiene la lista de productos.
-        pro_car = ProductoCarrito.all()
+        pro_car = ProductoCarrito.objects.all()
         # Se crea el serializer y se envía como response
         serializer = ProCarSerializer(pro_car, many=True)
         return Response(serializer.data)
