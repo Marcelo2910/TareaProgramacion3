@@ -21,7 +21,7 @@
 #           +-----------------------+-------------------------+------------------------+
 #
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json, requests
 from flask_cors import CORS
 
@@ -66,10 +66,9 @@ url_microservice5 = 'http://host.docker.internal:8080/cart'
 # Url para el microservicio 6
 url_microservice6 = 'http://host.docker.internal:8080/order'
 
-
 # Método que muestra la página de inicio del sistema
 @app.route("/", defaults={'api': None}, methods=['GET'])
-@app.route("/<api>", methods=['GET'])
+@app.route("/<api>", methods=['GET' , 'POST'])
 def index(api):
 
     # Se verifica si se recibió la variable api
@@ -101,19 +100,29 @@ def index(api):
             json = ms3.json()
             # Se crea el json que será enviado al template
             json_result = {'ms3': json}
+
+
+
+
+
         elif int(api) == 4:
-            # Se llama al microservicio enviando como parámetro la url y el header 
-            ms4 = requests.get(url_microservice4, headers=header_m4)
-            # Se convierte la respuesta a json
-            json = ms4.json()
-            # Se crea el json que será enviado al template
-            json_result = {'products': json}
-            return render_template("list_product.html", result=json_result)
+            if (request.method == 'GET'):
+                # Se llama al microservicio enviando como parámetro la url y el header 
+                ms4 = requests.get(url_microservice4, headers=header_m4)
+                # Se convierte la respuesta a json
+                json = ms4.json()
+                # Se crea el json que será enviado al template
+                json_result = {'products': json}
+                return render_template("list_product.html", result=json_result)
+            elif (request.method == 'POST'):
+                json = request.POST
+
+                ms4 = requests.post(url_microservice4, headers=header_m4, data=json)
+                return render_template("list_product.html")
         elif int(api) == 5:
-            # Se llama al microservicio enviando como parámetro la url y el header 
-            ms4 = requests.get(url_microservice4, headers=header_m4)
-            ms5 = requests.get(url_microservice5, headers=header_m5, data=ms4.json())
-            # Se convierte la respuesta a   json
+            # Se llama al microservicio enviando como parámetro la url y el header
+            ms5 = requests.get(url_microservice5, headers=header_m5)
+            # Se convierte la respuesta a json
             json = ms5.json()
             # Se crea el json que será enviado al template
             json_result = {'ms5': json}
@@ -139,6 +148,7 @@ def index(api):
     else:
         json_result = {'prueba':'prueba'}
         return render_template("index.html", result=json_result)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

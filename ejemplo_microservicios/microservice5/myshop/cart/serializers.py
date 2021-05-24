@@ -28,10 +28,10 @@
 #           |                       |                         |                        |
 #           +-----------------------+-------------------------+------------------------+
 #
-#-------------------------------------------------------------------------
+#--------------------------------------"-----------------------------------
 
 from rest_framework import serializers
-from .models import Cart, ProductoCarrito
+from .models import Cart, ProductoCarrito, Product
 
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,4 +41,9 @@ class CartSerializer(serializers.ModelSerializer):
 class ProCarSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductoCarrito
+        fields = '__all__'
+    
+class ProductoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
         fields = '__all__'

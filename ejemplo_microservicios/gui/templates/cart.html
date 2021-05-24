@@ -9,7 +9,6 @@
     <table class="cart">
         <thead>
             <tr>
-                <th>Image</th>
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Remove</th>
@@ -18,28 +17,11 @@
             </tr>
         </thead>
         <tbody>
-        {% for item in result['ms5'] %}
-            {% with product=item.product %}
-            <tr>
-                <td>
-                    <a href="{{ product.get_absolute_url }}">
-                        <img src="{% if product.image %}{{ product.image.url }}{% else %}/static/img/no_image.png{% endif %}">
-                    </a>
-                </td>
-                <td>{{ product.name }}</td>
-                <td>
-                    <form action="/5" method="post">
-                        {{ item.update_quantity_form.quantity }}
-                        {{ item.update_quantity_form.update }}
-                        <input type="submit" value="Update">
-                        {% csrf_token %}
-                    </form>
-                </td>
+        {% for carrito in result['ms5'] %}
+                <td>{{carrito}}</td>
+                <td>{{carrito}}</td>
                 <td><a href="/5">Remove</a></td>
-                <td class="num">${{ item.price }}</td>
-                <td class="num">${{ item.total_price }}</td>
             </tr>
-            {% endwith %}
         {% endfor %}
         <tr class="total">
             <td>Total</td>

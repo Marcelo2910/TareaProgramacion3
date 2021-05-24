@@ -19,15 +19,10 @@
 
             {% for o in result['ms6'] %}
             <tr>
-                <td>{{o.order.id}}</td>
-                <td>{{o.product.name}}</td>
-				<td>{{o.order.created}}</td>
-                <td>{{o.price}}</td>
-				{% if o.diff.days == 0 %}
-				<td><a href="/6" class="btn btn-danger">Cancelar</a></td>
-				{% else %}
-				<td><a class="btn btn-danger disabled">No se puede cancelar D:</a></td>
-				{% endif %}
+                <td>{{o}}</td>
+                <td>{{o}}</td>
+				<td>{{o}}</td>
+                <td>{{o}}</td>
             </tr>
             {% endfor %}
 
